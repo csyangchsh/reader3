@@ -192,7 +192,7 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
     image_map = {} # Key: internal_path, Value: local_relative_path
 
     for item in book.get_items():
-        if item.get_type() == ebooklib.ITEM_IMAGE:
+        if item.get_type() == ebooklib.ITEM_IMAGE or item.get_type() == ebooklib.ITEM_COVER:
             # Normalize filename
             original_fname = os.path.basename(item.get_name())
             # Sanitize filename for OS
@@ -224,7 +224,6 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
     for i, spine_item in enumerate(book.spine):
         item_id, linear = spine_item
         item = book.get_item_with_id(item_id)
-
         if not item:
             continue
 
@@ -247,6 +246,17 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                     img['src'] = image_map[src_decoded]
                 elif filename in image_map:
                     img['src'] = image_map[filename]
+            # B. Fix cover image issue
+            for image in soup.find_all('image'):
+                src = image.get('xlink:href', '')
+                if not src: continue
+
+                src_decoded = unquote(src)
+                filename = os.path.basename(src_decoded)
+                if src_decoded in image_map:
+                    image['xlink:href'] = image_map[src_decoded]
+                elif filename in image_map:
+                    image['xlink:href'] = image_map[filename]
 
             # B. Clean HTML
             soup = clean_html_content(soup)

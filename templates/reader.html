@@ -150,7 +150,58 @@
     </button>
 
     <script>
-        // Sidebar Toggle
+        // ========== READING PROGRESS TRACKING ==========
+        const BOOK_ID = "{{ book_id }}";
+        const CHAPTER_INDEX = {{ chapter_index }};
+
+        // Save reading position to localStorage
+        function saveReadingPosition() {
+            const mainContent = document.getElementById('main');
+            const scrollPosition = mainContent.scrollTop;
+
+            const readingData = {
+                chapterIndex: CHAPTER_INDEX,
+                scrollPosition: scrollPosition,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('reader3_book_' + BOOK_ID, JSON.stringify(readingData));
+        }
+
+        // Restore scroll position when page loads
+        function restoreScrollPosition() {
+            const savedData = localStorage.getItem('reader3_book_' + BOOK_ID);
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    // Only restore scroll if we're on the same chapter that was saved
+                    if (data.chapterIndex === CHAPTER_INDEX) {
+                        const mainContent = document.getElementById('main');
+                        mainContent.scrollTop = data.scrollPosition;
+                    }
+                } catch (e) {
+                    console.error('Error restoring scroll position:', e);
+                }
+            }
+        }
+
+        // Debounce function to avoid saving too frequently
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Save on scroll (debounced to every 1 second)
+        const debouncedSave = debounce(saveReadingPosition, 1000);
+
+        // ========== SIDEBAR TOGGLE ==========
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const toggleBtn = document.getElementById('toggle-sidebar');
@@ -162,15 +213,27 @@
             localStorage.setItem('sidebarHidden', sidebar.classList.contains('hidden'));
         }
 
-        // Restore sidebar state on page load
+        // ========== PAGE LOAD INITIALIZATION ==========
         document.addEventListener('DOMContentLoaded', function() {
+            // Restore sidebar state
             const sidebarHidden = localStorage.getItem('sidebarHidden') === 'true';
             if (sidebarHidden) {
                 document.getElementById('sidebar').classList.add('hidden');
                 document.getElementById('toggle-sidebar').classList.add('sidebar-hidden');
             }
+
+            // Restore scroll position
+            restoreScrollPosition();
+
+            // Attach scroll listener to save position
+            const mainContent = document.getElementById('main');
+            mainContent.addEventListener('scroll', debouncedSave);
+
+            // Save position when navigating away
+            window.addEventListener('beforeunload', saveReadingPosition);
         });
 
+        // ========== TOC NAVIGATION ==========
         // Helper to map TOC filenames to Spine Indices
         // Pass the spine data from python to JS
         const spineMap = {
@@ -180,6 +243,9 @@
         };
 
         function findAndGo(filename) {
+            // Save current position before navigating
+            saveReadingPosition();
+
             // The TOC usually has specific filenames e.g. "text/part001.html"
             // Sometimes it has anchors "text/part001.html#header"
             // We strip the anchor to find the page index

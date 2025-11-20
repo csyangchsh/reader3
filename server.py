@@ -56,9 +56,19 @@ async def library_view(request: Request):
     return templates.TemplateResponse("library.html", {"request": request, "books": books})
 
 @app.get("/read/{book_id}", response_class=HTMLResponse)
-async def redirect_to_first_chapter(book_id: str):
-    """Helper to just go to chapter 0."""
-    return await read_chapter(book_id=book_id, chapter_index=0)
+async def redirect_to_first_chapter(request: Request, book_id: str):
+    """
+    Helper that returns a page with JavaScript to check localStorage
+    for last read position, or defaults to chapter 0.
+    """
+    book = load_book_cached(book_id)
+    if not book:
+        raise HTTPException(status_code=404, detail="Book not found")
+
+    return templates.TemplateResponse("redirect.html", {
+        "request": request,
+        "book_id": book_id
+    })
 
 @app.get("/read/{book_id}/{chapter_index}", response_class=HTMLResponse)
 async def read_chapter(request: Request, book_id: str, chapter_index: int):

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: -apple-system, sans-serif;
+            background: #f5f1e8;
+            color: #3d3630;
+        }
+        .loader { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <h2>Loading book...</h2>
+        <p>Restoring your last read position...</p>
+    </div>
+    <script>
+        const bookId = "{{ book_id }}";
+        const savedData = localStorage.getItem('reader3_book_' + bookId);
+
+        let chapterIndex = 0; // Default to first chapter
+
+        if (savedData) {
+            try {
+                const data = JSON.parse(savedData);
+                chapterIndex = data.chapterIndex || 0;
+            } catch (e) {
+                console.error('Error parsing saved data:', e);
+            }
+        }
+
+        // Redirect to the appropriate chapter
+        window.location.href = '/read/' + bookId + '/' + chapterIndex;
+    </script>
+</body>
+</html>
+

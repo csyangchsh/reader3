@@ -12,7 +12,8 @@
         .book-card { background: #faf8f3; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(61, 54, 48, 0.1); transition: transform 0.2s; border: 1px solid #e8e4d9; }
         .book-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(61, 54, 48, 0.15); }
         .book-title { font-size: 1.2em; font-weight: bold; color: #3d3630; margin-bottom: 10px; }
-        .book-meta { color: #6b6257; font-size: 0.9em; margin-bottom: 15px; }
+        .book-meta { color: #6b6257; font-size: 0.9em; margin-bottom: 10px; }
+        .progress-indicator { color: #2c7ba8; font-size: 0.85em; margin-bottom: 15px; font-weight: 500; }
         .btn { display: inline-block; background: #2c7ba8; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; font-size: 0.9em; transition: background 0.2s; }
         .btn:hover { background: #235a7d; }
     </style>
@@ -27,16 +28,49 @@
 
         <div class="book-grid">
             {% for book in books %}
-            <div class="book-card">
+            <div class="book-card" data-book-id="{{ book.id }}" data-total-chapters="{{ book.chapters }}">
                 <div class="book-title">{{ book.title }}</div>
                 <div class="book-meta">
                     {{ book.author }}<br>
                     {{ book.chapters }} sections
                 </div>
-                <a href="/read/{{ book.id }}/0" class="btn">Read Book</a>
+                <div class="progress-indicator" id="progress-{{ book.id }}">
+                    <!-- Will be filled by JavaScript -->
+                </div>
+                <a href="/read/{{ book.id }}" class="btn">Read Book</a>
             </div>
             {% endfor %}
         </div>
     </div>
+
+    <script>
+        // Display reading progress for each book
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookCards = document.querySelectorAll('.book-card');
+
+            bookCards.forEach(card => {
+                const bookId = card.getAttribute('data-book-id');
+                const totalChapters = parseInt(card.getAttribute('data-total-chapters'));
+                const progressDiv = document.getElementById('progress-' + bookId);
+
+                // Try to get saved reading position
+                const savedData = localStorage.getItem('reader3_book_' + bookId);
+
+                if (savedData) {
+                    try {
+                        const data = JSON.parse(savedData);
+                        const chapter = data.chapterIndex + 1; // Convert to 1-based
+                        const percentage = Math.round((chapter / totalChapters) * 100);
+
+                        progressDiv.innerHTML = `📖 At section ${chapter} of ${totalChapters} (${percentage}%)`;
+                    } catch (e) {
+                        progressDiv.innerHTML = '📖 Start reading';
+                    }
+                } else {
+                    progressDiv.innerHTML = '📖 Start reading';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

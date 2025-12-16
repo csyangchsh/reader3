@@ -269,6 +269,12 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
             else:
                 final_html = str(soup)
 
+            # C2. Remove index-entry spans
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for span in soup_final.find_all('span', class_='index-entry'):
+                span.decompose()
+            final_html = str(soup_final)
+
             # D. Create Object
             chapter = ChapterContent(
                 id=item_id,

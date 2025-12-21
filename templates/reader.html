@@ -113,6 +113,21 @@
             margin: 15px 0;
         }
 
+        /* Horizontal lines for callout-container sidebar-container */
+        .book-content div.callout-container.sidebar-container {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .book-content div.callout-container.sidebar-container::before,
+        .book-content div.callout-container.sidebar-container::after {
+            content: "";
+            display: block;
+            height: 1px;
+            background-color: #d4cfc0;
+            margin: 20px 0;
+        }
+
         .book-content div p span[class="print-book-callout-head"] {
             font-weight: bold;
         }

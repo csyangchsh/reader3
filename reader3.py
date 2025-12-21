@@ -275,13 +275,19 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                 span.decompose()
             final_html = str(soup_final)
 
+            # C3. Remove codelink spans
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for p in soup_final.find_all('p', class_='codelink'):
+                p.decompose()
+            final_html = str(soup_final)
+
             # D. Create Object
             chapter = ChapterContent(
                 id=item_id,
                 href=item.get_name(), # Important: This links TOC to Content
                 title=f"Section {i+1}", # Fallback, real titles come from TOC
                 content=final_html,
-                text=extract_plain_text(soup),
+                text=extract_plain_text(soup_final),
                 order=i
             )
             spine_chapters.append(chapter)

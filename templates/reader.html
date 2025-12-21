@@ -94,7 +94,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
-        .book-content code {
+        .book-content code, .book-content div[class="code-area-container"] pre[class="code-area"] {
             #background-color: #f8f6f2;
             #padding: 1px 3px;
             border-radius: 3px;
@@ -104,13 +104,17 @@
         }
 
         /* Note box styling */
-        .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"] {
+        .book-content div[class="readable-text print-book-callout"], .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"] {
             background-color: #f8f6f2;
             border: 1px solid #d4cfc0;
             border-left: 4px solid #2c7ba8;
             border-radius: 4px;
             padding: 12px;
             margin: 15px 0;
+        }
+
+        .book-content div p span[class="print-book-callout-head"] {
+            font-weight: bold;
         }
 
         /* Blockquote styling */
@@ -127,7 +131,7 @@
         }
 
         /* Figure caption styling */
-        .book-content figure div.figure h6, .book-content figure figcaption p, .book-content p[class="caption-l"] {
+        .book-content figure div.figure h6, .book-content figure figcaption p, .book-content div h5[class="figure-container-h5"], .book-content div h5[class="browsable-container-h5"], .book-content p[class="caption-l"] {
             text-align: center;
             margin-top: 10px;
             margin-bottom: 10px;

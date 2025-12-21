@@ -36,12 +36,154 @@
         .content-container { max-width: 1000px; margin: 0 auto; line-height: 1.8; font-size: 1.15em; color: #2d2823; }
 
         /* Content Styling (Basic normalization for the book HTML) */
-        .book-content img { max-width: 50%; height: auto; display: block; margin: 20px auto; }
-        .book-content h1, .book-content h2, .book-content h3 { font-family: -apple-system, sans-serif; margin-top: 0.2em; margin-bottom: 0.2em; color: #3d3630; }
-        .book-content p { margin-bottom: 1.5em; text-align: justify; }
+        .book-content img { max-width: 50%; height: auto; display: block; margin: 15px auto; }
+        .book-content h1, .book-content h2, .book-content h3 { font-family: -apple-system, sans-serif; margin-top: 0.5em; margin-bottom: 0.3em; color: #3d3630; }
+        .book-content p { margin-bottom: 1em; margin-top: 0.5em; text-align: justify; }
+
+        /* Table styling with borders */
+        .book-content table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #d4cfc0; }
+        .book-content table th, .book-content table td { border: 1px solid #d4cfc0; padding: 6px 10px; text-align: left; }
+        .book-content table th { background-color: #e8e4d9; font-weight: bold; font-family: -apple-system, sans-serif; }
+        .book-content table tr:nth-child(even) { background-color: #f5f1e8; }
+        .book-content table tr:hover { background-color: #e8e4d9; }
+
+        /* Processedcode table styling - same as code blocks */
+        .book-content table.processedcode {
+            background-color: #f8f6f2;
+            border: 1px solid #d4cfc0;
+            border-radius: 4px;
+            padding: 8px;
+            margin: 12px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.2;
+            color: #2d2823;
+        }
+        .book-content table.processedcode th,
+        .book-content table.processedcode td {
+            border: none;
+            padding: 1px 4px;
+            background-color: #f8f6f2;
+            color: #2d2823;
+        }
+        .book-content table.processedcode tr {
+            background-color: #f8f6f2;
+        }
+        .book-content table.processedcode tr:nth-child(even) {
+            background-color: #f8f6f2;
+        }
+        .book-content table.processedcode tr:hover {
+            background-color: #f5f1e8;
+        }
+
+        /* Code block styling */
+        .book-content .programlisting, .book-content .snippet-code {
+            background-color: #f8f6f2;
+            border: 1px solid #d4cfc0;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 12px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.3;
+            color: #2d2823;
+        }
+        .book-content .programlisting pre, .book-content .snippet-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .book-content code {
+            #background-color: #f8f6f2;
+            #padding: 1px 3px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #b8554d;
+        }
+
+        /* Note box styling */
+        .book-content div[data-type="note"] {
+            background-color: #f8f6f2;
+            border: 1px solid #d4cfc0;
+            border-left: 4px solid #2c7ba8;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 15px 0;
+        }
+
+        /* Note box styling */
+        .book-content div[class="note"] {
+            background-color: #f8f6f2;
+            border: 1px solid #d4cfc0;
+            border-left: 4px solid #2c7ba8;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 15px 0;
+        }
+
+        /* Tip box styling */
+        .book-content div[data-type="tip"] {
+            background-color: #f8f6f2;
+            border: 1px solid #d4cfc0;
+            border-left: 4px solid #2c7ba8;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 15px 0;
+        }
+
+        /* Blockquote styling */
+        .book-content blockquote {
+            background-color: #f8f6f2;
+            border-left: 4px solid #c9c4b5;
+            margin: 15px 0;
+            padding: 12px 15px;
+            font-style: italic;
+            color: #5a5248;
+        }
+        .book-content blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Figure caption styling */
+        .book-content figure div.figure h6 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #5a5248;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        /* Figure caption styling */
+        .book-content figure figcaption p {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #5a5248;
+            font-weight: normal;
+            font-style: italic;
+        }
 
         /* Navigation Footer */
-        .chapter-nav { display: flex; justify-content: space-between; margin-top: 60px; padding-top: 20px; border-top: 1px solid #d4cfc0; font-family: -apple-system, sans-serif; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 5px; padding-top: 5px; border-top: 1px solid #d4cfc0; font-family: -apple-system, sans-serif; }
+
+        /* Top Navigation */
+        .top-nav {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding-top: 0;
+            padding-bottom: 5px;
+            border-top: none;
+            border-bottom: 1px solid #d4cfc0;
+        }
+        .top-nav .nav-btn {
+            font-size: 1.2em;
+            padding: 6px 12px;
+        }
         .nav-btn { text-decoration: none; color: #2c7ba8; font-weight: bold; padding: 10px 20px; border: 1px solid #2c7ba8; border-radius: 4px; transition: all 0.2s; }
         .nav-btn:hover { background: #2c7ba8; color: white; }
         .nav-btn.disabled { opacity: 0.5; pointer-events: none; border-color: #c9c4b5; color: #8a8377; }
@@ -63,7 +205,7 @@
 
     <!-- SIDEBAR -->
     <div id="sidebar">
-        <button id="close-sidebar" onclick="toggleSidebar()" aria-label="Close Sidebar">✕</button>
+        <a id="close-sidebar" onclick="toggleSidebar()" aria-label="Close Sidebar">⛌</a>
         <a href="/" class="nav-home">← Back to Library</a>
         <div class="nav-header">{{ book.metadata.title }}</div>
 
@@ -119,25 +261,44 @@
     <!-- MAIN CONTENT -->
     <div id="main">
         <div class="content-container">
+            <!-- TOP NAVIGATION -->
+            <div class="chapter-nav top-nav">
+                {% if prev_idx is not none %}
+                    <a href="/read/{{ book_id }}/{{ prev_idx }}" class="nav-btn">⬅️</a>
+                {% else %}
+                    <span class="nav-btn disabled">⬅️</span>
+                {% endif %}
+
+                <span style="color: #999; padding: 10px; font-size: 0.9em;">
+                    {{ chapter_index + 1 }} / {{ book.spine|length }}
+                </span>
+
+                {% if next_idx is not none %}
+                    <a href="/read/{{ book_id }}/{{ next_idx }}" class="nav-btn">➡️</a>
+                {% else %}
+                    <span class="nav-btn disabled">➡️</span>
+                {% endif %}
+            </div>
+
             <div class="book-content">
                 {{ current_chapter.content | safe }}
             </div>
 
             <div class="chapter-nav">
                 {% if prev_idx is not none %}
-                    <a href="/read/{{ book_id }}/{{ prev_idx }}" class="nav-btn">← Previous</a>
+                    <a href="/read/{{ book_id }}/{{ prev_idx }}" class="nav-btn">⬅️</a>
                 {% else %}
-                    <span class="nav-btn disabled">← Previous</span>
+                    <span class="nav-btn disabled">⬅️</span>
                 {% endif %}
 
-                <span style="color: #999; padding: 10px;">
-                    Section {{ chapter_index + 1 }} of {{ book.spine|length }}
+                <span style="color: #999; padding: 10px; font-size: 0.9em;">
+                    {{ chapter_index + 1 }} / {{ book.spine|length }}
                 </span>
 
                 {% if next_idx is not none %}
-                    <a href="/read/{{ book_id }}/{{ next_idx }}" class="nav-btn">Next →</a>
+                    <a href="/read/{{ book_id }}/{{ next_idx }}" class="nav-btn">➡️</a>
                 {% else %}
-                    <span class="nav-btn disabled">Next →</span>
+                    <span class="nav-btn disabled">➡️</span>
                 {% endif %}
             </div>
         </div>

@@ -104,27 +104,7 @@
         }
 
         /* Note box styling */
-        .book-content div[data-type="note"] {
-            background-color: #f8f6f2;
-            border: 1px solid #d4cfc0;
-            border-left: 4px solid #2c7ba8;
-            border-radius: 4px;
-            padding: 12px;
-            margin: 15px 0;
-        }
-
-        /* Note box styling */
-        .book-content div[class="note"] {
-            background-color: #f8f6f2;
-            border: 1px solid #d4cfc0;
-            border-left: 4px solid #2c7ba8;
-            border-radius: 4px;
-            padding: 12px;
-            margin: 15px 0;
-        }
-
-        /* Tip box styling */
-        .book-content div[data-type="tip"] {
+        .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"] {
             background-color: #f8f6f2;
             border: 1px solid #d4cfc0;
             border-left: 4px solid #2c7ba8;
@@ -147,18 +127,7 @@
         }
 
         /* Figure caption styling */
-        .book-content figure div.figure h6 {
-            text-align: center;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            font-size: 0.9em;
-            color: #5a5248;
-            font-weight: normal;
-            font-style: italic;
-        }
-
-        /* Figure caption styling */
-        .book-content figure figcaption p {
+        .book-content figure div.figure h6, .book-content figure figcaption p, .book-content p[class="caption-l"] {
             text-align: center;
             margin-top: 10px;
             margin-bottom: 10px;

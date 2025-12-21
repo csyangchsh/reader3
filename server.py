@@ -45,10 +45,17 @@ async def library_view(request: Request):
             if item.endswith("_data") and os.path.isdir(item):
                 # Try to load it to get the title
                 book = load_book_cached(item)
+
+                if ':' in book.metadata.title:
+                    title = book.metadata.title.split(':')[0]
+                else:
+                    title = book.metadata.title
+                if '(' in title:
+                    title = title.split('(')[0]
                 if book:
                     books.append({
                         "id": item,
-                        "title": book.metadata.title,
+                        "title": title,
                         "author": ", ".join(book.metadata.authors),
                         "chapters": len(book.spine)
                     })

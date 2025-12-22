@@ -185,7 +185,7 @@
         #copy-content-btn:hover { background: #235f87; transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
         #copy-content-btn:active { transform: scale(0.95); }
         #copy-content-btn.copied { background: #4caf50; }
-        .copy-tooltip { position: absolute; bottom: 70px; right: 0; background: #3d3630; color: white; padding: 8px 12px; border-radius: 4px; font-size: 0.85em; white-space: nowrap; opacity: 0; transition: opacity 0.3s; pointer-events: none; font-family: -apple-system, sans-serif; }
+        .copy-tooltip { position: absolute; bottom: 100px; right: 0; background: #3d3630; color: white; padding: 8px 12px; border-radius: 4px; font-size: 0.85em; white-space: nowrap; opacity: 0; transition: opacity 0.3s; pointer-events: none; font-family: -apple-system, sans-serif; }
         .copy-tooltip.show { opacity: 1; }
 
     </style>
@@ -193,7 +193,7 @@
 <body>
 
     <!-- TOGGLE BUTTON -->
-    <button id="toggle-sidebar" onclick="toggleSidebar()" aria-label="Toggle Sidebar">📚</button>
+    <a id="toggle-sidebar" onclick="toggleSidebar()" aria-label="Toggle Sidebar">📚</a>
 
     <!-- SIDEBAR -->
     <div id="sidebar">
@@ -297,10 +297,10 @@
     </div>
 
     <!-- COPY BUTTON -->
-    <button id="copy-content-btn" onclick="copyContent()" aria-label="Copy Content" title="Copy chapter text">
+    <a id="copy-content-btn" onclick="copyContent()" aria-label="Copy Content" title="Copy chapter text">
         📋
-        <div class="copy-tooltip" id="copy-tooltip">Text copied!</div>
-    </button>
+    </a>
+    <div class="copy-tooltip" id="copy-tooltip">Text copied!</div>
 
     <script>
         // ========== READING PROGRESS TRACKING ==========

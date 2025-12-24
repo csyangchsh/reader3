@@ -281,6 +281,14 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                 p.decompose()
             final_html = str(soup_final)
 
+            # C4. Remove empty <p><br></p> paragraphs
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for p in soup_final.find_all('p'):
+                # Remove p if it contains only a br tag (with possible whitespace)
+                if len(p.contents) == 1 and p.find('br') and not p.find('br').find_next_sibling():
+                    p.decompose()
+            final_html = str(soup_final)
+
             # D. Create Object
             chapter = ChapterContent(
                 id=item_id,

@@ -117,7 +117,26 @@
             border-left: 4px solid #2c7ba8;
             border-radius: 4px;
             padding: 12px;
-            margin: 15px 0;
+            margin: 8px 0;
+        }
+        .book-content div[class="readable-text print-book-callout"] h6,
+        .book-content div[data-type="note"] h6,
+        .book-content div[class="note"] h6,
+        .book-content div[data-type="tip"] h6 {
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+        .book-content div[class="readable-text print-book-callout"] p:first-child,
+        .book-content div[data-type="note"] p:first-child,
+        .book-content div[class="note"] p:first-child,
+        .book-content div[data-type="tip"] p:first-child {
+            margin-top: 0;
+        }
+        .book-content div[class="readable-text print-book-callout"] p:last-child,
+        .book-content div[data-type="note"] p:last-child,
+        .book-content div[class="note"] p:last-child,
+        .book-content div[data-type="tip"] p:last-child {
+            margin-bottom: 0;
         }
 
         /* Horizontal lines for callout-container sidebar-container */
@@ -161,6 +180,60 @@
             color: #5a5248;
             font-weight: normal;
             font-style: italic;
+        }
+
+        /* Callout list styling - make numbers and text appear on same line */
+        .book-content dl.calloutlist {
+            margin: 15px 0;
+            padding-left: 0;
+            overflow: hidden;
+        }
+        .book-content dl.calloutlist dt {
+            float: left;
+            margin-right: 8px;
+            clear: both;
+        }
+        .book-content dl.calloutlist dd {
+            float: left;
+            margin: 0 0 8px 0;
+            padding-left: 0;
+            width: calc(100% - 30px);
+        }
+        .book-content dl.calloutlist dt img {
+            vertical-align: middle;
+            /* Ensure image maintains its original size */
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+        }
+        /* Clear floats after the list */
+        .book-content dl.calloutlist::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Callout images in code blocks */
+        .book-content pre a.co,
+        .book-content code a.co {
+            display: inline !important;
+            vertical-align: middle !important;
+        }
+        .book-content pre a.co img,
+        .book-content code a.co img {
+            display: inline !important;
+            vertical-align: middle !important;
+            /* Ensure image maintains its original size */
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+        }
+        /* Ensure code elements stay inline */
+        .book-content pre code,
+        .book-content code {
+            display: inline !important;
         }
 
         .book-content p[class="CS_Head"], .book-content p[class="Key_Head"], .book-content p[class="A_head"], .book-content p[class="B_head"], .book-content p[class="C_head_-before"] {

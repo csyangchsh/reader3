@@ -289,6 +289,21 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                     p.decompose()
             final_html = str(soup_final)
 
+            # C5. Remove OceanofPDF.com watermarks
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for link in soup_final.find_all('a', href=lambda x: x and 'oceanofpdf.com' in x):
+                # 删除包含此链接的父级 p 和 div
+                p = link.find_parent('p')
+                if p:
+                    div = p.find_parent('div')
+                    if div:
+                        div.decompose()
+                    else:
+                        p.decompose()
+                else:
+                    link.decompose()
+            final_html = str(soup_final)
+
             # D. Create Object
             chapter = ChapterContent(
                 id=item_id,

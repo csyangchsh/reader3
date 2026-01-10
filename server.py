@@ -60,6 +60,9 @@ async def library_view(request: Request):
                         "chapters": len(book.spine)
                     })
 
+    # Sort books by title
+    books = sorted(books, key=lambda x: x["title"])
+
     return templates.TemplateResponse("library.html", {"request": request, "books": books})
 
 @app.get("/read/{book_id}", response_class=HTMLResponse)

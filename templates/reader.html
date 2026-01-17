@@ -45,6 +45,7 @@
         .image-modal img { max-width: 90%; max-height: 90%; object-fit: contain; cursor: zoom-out; background: rgba(255,255,255,0.95); box-shadow: 0 0 20px rgba(0,0,0,0.3); }
         .image-modal-close { position: absolute; top: 20px; right: 30px; color: #3d3630; font-size: 40px; font-weight: bold; cursor: pointer; user-select: none; background: rgba(255,255,255,0.8); width: 50px; height: 50px; border-radius: 50%; text-align: center; line-height: 50px; }
         .book-content h1, .book-content h2, .book-content h3 { font-family: -apple-system, sans-serif; margin-top: 0.5em; margin-bottom: 0.3em; color: #3d3630; }
+        .book-content p[class="p15"] { font-family: -apple-system, sans-serif; margin-top: 0.5em; margin-bottom: 0.3em; color: #3d3630; font-weight: bold; font-size: 1.5em; }
         .book-content p { margin-bottom: 1em; margin-top: 0.5em; text-align: justify; }
 
         /* Table styling with borders */
@@ -238,6 +239,10 @@
         }
 
         .book-content p[class="CS_Head"], .book-content p[class="Key_Head"], .book-content p[class="A_head"], .book-content p[class="B_head"], .book-content p[class="C_head_-before"] {
+            font-weight: bold;
+        }
+
+        .book-content p[class="p16"] {
             font-weight: bold;
         }
 
@@ -508,9 +513,24 @@
             });
         }
 
+        // ========== REMOVE INLINE STYLES ==========
+        function removeInlineStyles() {
+            const bookContent = document.querySelector('.book-content');
+            if (!bookContent) return;
+
+            // Remove style attribute from all elements in book content
+            const allElements = bookContent.querySelectorAll('*');
+            allElements.forEach(function(el) {
+                el.removeAttribute('style');
+            });
+        }
+
         // ========== IMAGE ZOOM FUNCTIONALITY ==========
         // Add click listeners to all images after page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Remove inline styles from book content
+            removeInlineStyles();
+
             const images = document.querySelectorAll('.book-content img');
             images.forEach(function(img) {
                 img.addEventListener('click', function() {

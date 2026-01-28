@@ -47,6 +47,7 @@
         .book-content h1, .book-content h2, .book-content h3 { font-family: -apple-system, sans-serif; margin-top: 0.5em; margin-bottom: 0.3em; color: #3d3630; }
         .book-content p[class="p15"] { font-family: -apple-system, sans-serif; margin-top: 0.5em; margin-bottom: 0.3em; color: #3d3630; font-weight: bold; font-size: 1.5em; }
         .book-content p { margin-bottom: 1em; margin-top: 0.5em; text-align: justify; }
+        .book-content p[data-type="attribution"] { text-align: right; }
 
         /* Table styling with borders */
         .book-content table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #d4cfc0; }
@@ -112,7 +113,7 @@
         }
 
         /* Note box styling */
-        .book-content div[class="readable-text print-book-callout"], .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"] {
+        .book-content div[class="readable-text print-book-callout"], .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"], .book-content div[data-type="warning"] {
             background-color: #f8f6f2;
             border: 1px solid #d4cfc0;
             border-left: 4px solid #2c7ba8;
@@ -120,23 +121,30 @@
             padding: 12px;
             margin: 8px 0;
         }
+        /* Warning box with different color */
+        .book-content div[data-type="warning"] {
+            border-left-color: #d97706;
+        }
         .book-content div[class="readable-text print-book-callout"] h6,
         .book-content div[data-type="note"] h6,
         .book-content div[class="note"] h6,
-        .book-content div[data-type="tip"] h6 {
+        .book-content div[data-type="tip"] h6,
+        .book-content div[data-type="warning"] h6 {
             margin-top: 0;
             margin-bottom: 0.5em;
         }
         .book-content div[class="readable-text print-book-callout"] p:first-child,
         .book-content div[data-type="note"] p:first-child,
         .book-content div[class="note"] p:first-child,
-        .book-content div[data-type="tip"] p:first-child {
+        .book-content div[data-type="tip"] p:first-child,
+        .book-content div[data-type="warning"] p:first-child {
             margin-top: 0;
         }
         .book-content div[class="readable-text print-book-callout"] p:last-child,
         .book-content div[data-type="note"] p:last-child,
         .book-content div[class="note"] p:last-child,
-        .book-content div[data-type="tip"] p:last-child {
+        .book-content div[data-type="tip"] p:last-child,
+        .book-content div[data-type="warning"] p:last-child {
             margin-bottom: 0;
         }
 

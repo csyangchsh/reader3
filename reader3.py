@@ -304,6 +304,15 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                     link.decompose()
             final_html = str(soup_final)
 
+            # C6. Remove <p class="p1">&nbsp;</p> empty paragraphs
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for p in soup_final.find_all('p', class_='p1'):
+                # Check if paragraph contains only &nbsp; (non-breaking space)
+                text = p.get_text(strip=True)
+                if not text or text == '\xa0':  # \xa0 is &nbsp;
+                    p.decompose()
+            final_html = str(soup_final)
+
             # D. Create Object
             chapter = ChapterContent(
                 id=item_id,

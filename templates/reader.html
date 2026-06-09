@@ -113,7 +113,7 @@
         }
 
         /* Note box styling */
-        .book-content div[class="readable-text print-book-callout"], .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"], .book-content div[data-type="warning"] {
+        .book-content div[class="readable-text print-book-callout"], .book-content div[data-type="note"], .book-content div[class="note"], .book-content div[data-type="tip"], .book-content div[data-type="warning"], .book-content aside.sidebar {
             background-color: #f8f6f2;
             border: 1px solid #d4cfc0;
             border-left: 4px solid #2c7ba8;
@@ -181,7 +181,17 @@
             margin-bottom: 0;
         }
 
+        .book-content blockquote footer {
+            text-align: right;
+            margin-top: 8px;
+        }
+
         /* Figure caption styling */
+        .book-content figcaption.Caption { text-align: center; }
+        .book-content div.CaptionContent { display: inline; text-align: center; }
+        .book-content span.CaptionNumber { display: inline; }
+        .book-content span.CaptionNumber::after { content: " "; }
+        .book-content div.CaptionContent p.SimplePara { display: inline; }
         .book-content p[class="caption"], .book-content p[class="packt_figref"], .book-content p[class="Fig_Caption"], .book-content p[class="FT-TT"], .book-content figure p[class="caption_s2X"], .book-content figure div.figure h6, .book-content figure figcaption p, .book-content div h5[class="figure-container-h5"], .book-content div h5[class="browsable-container-h5"], .book-content p[class="caption-l"] {
             text-align: center;
             margin-top: 10px;
@@ -246,12 +256,28 @@
             display: inline !important;
         }
 
+        /* Add leading space to title spans */
+        .book-content span.chaptitle::before,
+        .book-content span.parttitle::before,
+        .book-content span.parttitle1::before,
+        .book-content span.texthead::before {
+            content: "\00a0";
+        }
+
         .book-content p[class="CS_Head"], .book-content p[class="Key_Head"], .book-content p[class="A_head"], .book-content p[class="B_head"], .book-content p[class="C_head_-before"] {
             font-weight: bold;
         }
 
         .book-content p[class="p16"] {
             font-weight: bold;
+        }
+
+        .book-content li.ListItem .ItemNumber {
+            display: none;
+        }
+
+        .book-content li.Citation .CitationNumber {
+            display: none;
         }
 
         /* Navigation Footer */
@@ -557,6 +583,50 @@
             });
         }
 
+        // ========== REMOVE DOI ELEMENTS ==========
+        function removeDOIElements() {
+            const bookContent = document.querySelector('.book-content');
+            if (!bookContent) return;
+
+            bookContent.querySelectorAll('p.doi').forEach(function(el) {
+                el.remove();
+            });
+        }
+
+        // ========== REMOVE CLEARBOTH DIVS ==========
+        function removeClearBothDivs() {
+            const bookContent = document.querySelector('.book-content');
+            if (!bookContent) return;
+
+            bookContent.querySelectorAll('li div.ClearBoth').forEach(function(el) {
+                el.remove();
+            });
+        }
+
+        // ========== FLATTEN FOOTNOTES ==========
+        // Merge <span class="FootnoteNumber"> into the following <p> inside <div class="FootnoteContent">
+        function flattenFootnotes() {
+            const bookContent = document.querySelector('.book-content');
+            if (!bookContent) return;
+
+            bookContent.querySelectorAll('div.Footnote').forEach(function(footnote) {
+                const span = footnote.querySelector('span.FootnoteNumber');
+                const content = footnote.querySelector('div.FootnoteContent');
+                if (!span || !content) return;
+
+                const p = content.querySelector('p');
+                if (!p) return;
+
+                // Insert span's innerHTML at the beginning of the <p>
+                p.insertAdjacentHTML('afterbegin', span.innerHTML + ' ');
+                span.remove();
+
+                // Also remove ClearBoth div
+                const clearBoth = footnote.querySelector('div.ClearBoth');
+                if (clearBoth) clearBoth.remove();
+            });
+        }
+
         // ========== MOVE FOOTNOTES TO BOTTOM ==========
         function moveFootnotesToBottom() {
             const bookContent = document.querySelector('.book-content');
@@ -582,6 +652,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Remove inline styles from book content
             removeInlineStyles();
+
+            // Remove DOI elements
+            removeDOIElements();
+
+            // Remove ClearBoth divs
+            removeClearBothDivs();
+
+            // Flatten footnotes (merge FootnoteNumber span into <p>)
+            flattenFootnotes();
 
             // Move footnotes to bottom
             moveFootnotesToBottom();

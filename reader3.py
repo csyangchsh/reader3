@@ -83,6 +83,11 @@ def clean_html_content(soup: BeautifulSoup) -> BeautifulSoup:
     for tag in soup.find_all('input'):
         tag.decompose()
 
+    # Remove <aside> inside <div class="AuthorGroup">
+    for author_group in soup.find_all('div', class_='AuthorGroup'):
+        for aside in author_group.find_all('aside'):
+            aside.decompose()
+
     return soup
 
 
@@ -311,6 +316,12 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                 text = p.get_text(strip=True)
                 if not text or text == '\xa0':  # \xa0 is &nbsp;
                     p.decompose()
+            final_html = str(soup_final)
+
+            # C7. Remove ChapterContextInformation divs
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for div in soup_final.find_all('div', class_='ChapterContextInformation'):
+                div.decompose()
             final_html = str(soup_final)
 
             # D. Create Object

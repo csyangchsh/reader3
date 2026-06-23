@@ -324,6 +324,13 @@ def process_epub(epub_path: str, output_dir: str) -> Book:
                 div.decompose()
             final_html = str(soup_final)
 
+            # C8. Remove <br> tags inside <h1 class="chapter">
+            soup_final = BeautifulSoup(final_html, 'html.parser')
+            for h1 in soup_final.find_all('h1', class_='chapter'):
+                for br in h1.find_all('br'):
+                    br.decompose()
+            final_html = str(soup_final)
+
             # D. Create Object
             chapter = ChapterContent(
                 id=item_id,
